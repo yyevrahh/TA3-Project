@@ -9,17 +9,18 @@ using namespace std;
 
 void readAndAppend(string path, unordered_map<string, string>& targetArr)
 {
+    // use for central index (initToCentralIndex), borrowed books, and library members.
     ifstream readFile(path);
-    string id, title;
+    string id, content;
 
     if (!readFile) {
         cerr << "Error: Could not open " << path << endl;
         return;
     }
 
-    while(getline(readFile, id, ',') && getline(readFile, title))
+    while(getline(readFile, id, ',') && getline(readFile, content))
     {
-        targetArr[id] = title;
+        targetArr[id] = content;
     }
 
     readFile.close();
@@ -33,21 +34,6 @@ void initToCentralIndex(unordered_map<string, string>& centralIndexMap)
         readAndAppend("book_genres/" + genre + ".txt", centralIndexMap);
     }
 }
-
-void writeIntoFile(string path, string content)
-{
-    ofstream writeFile(path, ios::app);
-
-    if (!writeFile) {
-        cerr << "Error: Could not open " << path << endl;
-        return;
-    }
-
-    writeFile << content << endl;
-
-    writeFile.close();
-}
-
 
 void updateGenresFile(unordered_map<string, string>& centralIndexMap)
 {
@@ -72,4 +58,19 @@ void updateGenresFile(unordered_map<string, string>& centralIndexMap)
             }
         }
     }
+    
+    writeFile.close();
+}
+
+void updateFileByArrData(string path, unordered_map<string, string>& dataArr)
+{
+    ofstream writeFile(path);
+    string id, content;
+
+    for (auto const& [id, content] : dataArr)
+    {
+        writeFile << id << "," << content << endl;
+    }
+
+    writeFile.close();
 }
