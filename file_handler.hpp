@@ -10,7 +10,7 @@ using namespace std;
 
 void readAndAppend(string, unordered_map<string, string>&);
 void initToCentralIndex(unordered_map<string, string>&);
-void writeIntoFile(string, string);
 void updateGenresFile(unordered_map<string, string>&);
+void updateFileByArrData(string, unordered_map<string, string>&)
 
 #endif
