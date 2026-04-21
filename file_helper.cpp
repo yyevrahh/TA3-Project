@@ -15,29 +15,27 @@ void readAndAppend(string path, unordered_map<string, string>& targetMap)
 
     if (!readFile)
     {
-        cerr << "Error: Could not open " << path << endl;
+        cerr << "\e[1;31mError: Could not open.\e[0m" << path << endl;
         return;
     }
 
-    while (getline(readFile, line))
-{
-    if (line.length() < 8) continue; // skip empty
-
-    string id = line.substr(0, 7);
-
-    string content = line.substr(8);
-
-    size_t secondCommaPos = content.find(',');
-
-    if (secondCommaPos != string::npos)
+    while (getline(readFile, line)) 
     {
-        targetMap.at(id) = content.substr(0, secondCommaPos);
+        if (line.length() < 8) continue; // skip empty
+
+        string id = line.substr(0, 7);
+        string content = line.substr(8);
+        size_t secondCommaPos = content.find(',');
+
+        if (secondCommaPos != string::npos)
+        {
+            targetMap.at(id) = content.substr(0, secondCommaPos);
+        }
+        else
+        {
+            targetMap.at(id) = content;
+        }
     }
-    else
-    {
-        targetMap.at(id) = content;
-    }
-}
 
     readFile.close();
 }
@@ -79,9 +77,10 @@ void updateGenresFile(unordered_map<string, string>& centralIndexMap, unordered_
         }
         else 
         {
-            cerr << "Error: Invalid genre code or file error for ID: " << id << endl;
+            cerr << "\e[1;31mError: Invalid genre code or file error for ID: " << id << "\e0m" <<  endl;
         }
     }
+
     fntFile.close();
     mysFile.close();
     romFile.close();
