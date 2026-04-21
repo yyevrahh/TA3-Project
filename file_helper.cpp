@@ -4,54 +4,40 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include "data_bundle.hpp"
 
 using namespace std;
+// run these functions for both initializing and exiting
 
-// use for central index (initToCentralIndex), borrowed books, and library members.
-void readAndAppend(string path, unordered_map<string, string>& targetMap)
-{
-    ifstream readFile(path);
-    string line;
-
-    if (!readFile)
-    {
-        cerr << "\e[1;31mError: Could not open.\e[0m" << path << endl;
-        return;
-    }
-
-    while (getline(readFile, line)) 
-    {
-        if (line.length() < 8) continue; // skip empty
-
-        string id = line.substr(0, 7); // chars upto ID and comma
-        string content = line.substr(8); // chars onward
-        size_t secondCommaPos = content.find(','); // chars until comma after title
-
-        if (secondCommaPos != string::npos)
-        {
-            targetMap.at(id) = content.substr(0, secondCommaPos);
-        }
-        else
-        {
-            targetMap.at(id) = content;
-        }
-    }
-
-    readFile.close();
-}
-
-// programmed read and append for central index
-void initToCentralIndex(unordered_map<string, string>& centralIndexMap)
-{
+void initAllData(BookBundle& books) {
     vector<string> genres = {"fantasy", "mystery", "romance", "science_fiction", "thriller"};
-    for (const string& genre: genres)
-    {
-        readAndAppend("book_genres/" + genre + ".txt", centralIndexMap);
+    
+    for (const string& genre : genres) {
+        ifstream file("book_genres/" + genre + ".txt");
+        string line;
+
+        while (getline(file, line)) {
+            stringstream ss(line);
+            string id, title, author, yearStr, publisher;
+
+            if (getline(ss, id, ',') &&
+                getline(ss, title, ',') &&
+                getline(ss, author, ',') &&
+                getline(ss, yearStr, ',') &&
+                getline(ss, publisher)) 
+            {
+                books.centralIndex[id] = title;
+                books.authors[id] = author;
+                books.years[id] = stoi(yearStr);
+                books.publishers[id] = publisher;
+            }
+        }
+        file.close();
     }
 }
 
 // update the books under book_genres folder (id, title, author, year, publisher)
-void updateGenresFile(unordered_map<string, string>& centralIndexMap, unordered_map<string, string>& authorMap, unordered_map<string, int>& yearMap, unordered_map<string, string>& publisherMap)
+void updateGenresFile(BookBundle& books)
 {
     ofstream fntFile("book_genres/fantasy.txt");
     ofstream mysFile("book_genres/mystery.txt");
@@ -59,7 +45,7 @@ void updateGenresFile(unordered_map<string, string>& centralIndexMap, unordered_
     ofstream sciFile("book_genres/science_fiction.txt");
     ofstream thrFile("book_genres/thriller.txt");
 
-    for (auto const& [id, title] : centralIndexMap)
+    for (auto const& [id, title] : books.centralIndex)
     {
         string genreCode = id.substr(0, 3);
         ofstream* targetFile = nullptr;
@@ -73,7 +59,7 @@ void updateGenresFile(unordered_map<string, string>& centralIndexMap, unordered_
         // check if all exists and ready
         if (targetFile && *targetFile) 
         {
-            *targetFile << id << "," << title << "," << authorMap.at(id) << "," << yearMap.at(id) << "," << publisherMap.at(id) << endl;
+            *targetFile << id << "," << title << "," << books.authors.at(id) << "," << books.years.at(id) << "," << books.publishers.at(id) << endl;
         }
         else 
         {
@@ -102,15 +88,15 @@ void updateFileByDataMapStr(string path, unordered_map<string, string>& dataMap)
     writeFile.close();
 }
 
-// use to update key:value data from <string, int> maps = yearMap
-void updateFileByDataMapInt(string path, unordered_map<string, int>& dataMap)
+// use to update key:value data from <string, int> maps = years
+void updateFileByDataMapYears(string path, const BookBundle& books)
 {
     ofstream writeFile(path);
 
     string id;
     int year;
 
-    for (auto const& [id, year] : dataMap)
+    for (auto const& [id, year] : books.years)
     {
         writeFile << id << "," << year << endl;
     }

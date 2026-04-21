@@ -4,13 +4,13 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include "data_bundle.hpp"
 
 using namespace std;
 
-void readAndAppend(string, unordered_map<string, string>&);
-void initToCentralIndex(unordered_map<string, string>&);
-void updateGenresFile(unordered_map<string, string>&, unordered_map<string, string>&, unordered_map<string, int>&, unordered_map<string, string>&);
+void initAllData(BookBundle& books);
+void updateGenresFile(BookBundle&);
 void updateFileByDataMapStr(string, unordered_map<string, string>&);
-void updateFileByDataMapInt(string, unordered_map<string, int>&);
+void updateFileByDataMapInt(string, const BookBundle&);
 
 #endif
