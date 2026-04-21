@@ -1,5 +1,5 @@
-#ifndef DATA_HELPER_CPP
-#define DATA_HELPER_CPP
+#ifndef DATA_HELPER_HPP
+#define DATA_HELPER_HPP
 
 #include <string>
 #include <unordered_map>

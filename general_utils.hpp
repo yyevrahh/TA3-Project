@@ -1,5 +1,5 @@
-#ifndef GENERAL_UTILS_CPP
-#define GENERAL_UTILS_CPP
+#ifndef GENERAL_UTILS_HPP
+#define GENERAL_UTILS_HPP
 
 #include <iostream>
 

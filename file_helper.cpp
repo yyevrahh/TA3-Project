@@ -23,9 +23,9 @@ void readAndAppend(string path, unordered_map<string, string>& targetMap)
     {
         if (line.length() < 8) continue; // skip empty
 
-        string id = line.substr(0, 7);
-        string content = line.substr(8);
-        size_t secondCommaPos = content.find(',');
+        string id = line.substr(0, 7); // chars upto ID and comma
+        string content = line.substr(8); // chars onward
+        size_t secondCommaPos = content.find(','); // chars until comma after title
 
         if (secondCommaPos != string::npos)
         {
