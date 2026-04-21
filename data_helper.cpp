@@ -9,6 +9,7 @@
 
 // TODO: book search, delete, update funcs
 // TODO: member CRUD funcs
+// TODO: keep hpp updated
 
 // general data entry output is: ID TITLE YEAR AUTHOR GENRE PUBLISHER
 // no title maps!!! it is on centralIndexMap
