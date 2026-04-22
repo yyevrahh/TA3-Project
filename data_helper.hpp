@@ -43,7 +43,7 @@ void searchMemberByName(MemberBundle&);
 void updateMember(MemberBundle&);
 void deleteMember(MemberBundle&);
 
-// Book Operations
+// Borrow Operations
 void borrowABook(MemberBundle&, BookBundle&);
 void deleteMemberBorrowByBookID(MemberBundle&);
 #endif

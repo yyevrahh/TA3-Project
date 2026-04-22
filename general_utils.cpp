@@ -16,18 +16,22 @@ using namespace std;
 
 #include "general_utils.hpp"
 
-int getValidInt(const string& prompt) {
+int getValidInt(const string& prompt)
+{
     int value;
-    while (true) {
+    while (true)
+    {
         cout << prompt;
         cin >> value;
 
-        if (cin.fail()) {
+        if (cin.fail())
+        {
             cin.clear();
             cin.ignore(1000, '\n');
-            cout << "\e[1;31mInvalid input. Please enter a number.\e[0m" << endl;
+            cout << "\t\e[1;31mInvalid input. Please enter a number.\e[0m" << endl;
         } 
-        else {
+        else
+        {
             cin.ignore(1000, '\n');
             return value;
         }
@@ -36,7 +40,6 @@ int getValidInt(const string& prompt) {
 
 void pressAnyKey() 
 {
-    
     cout << endl << endl;
     cout << "\nPress any key to continue..." << flush;
 

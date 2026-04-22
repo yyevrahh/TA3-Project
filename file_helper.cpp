@@ -85,7 +85,7 @@ void updateGenresFile(BookBundle& books)
         {
             *targetFile << id << "," << title << "," << books.authors[id] << "," << books.years[id] << "," << books.publishers[id] << endl;
         }
-        else 
+        else
         {
             cerr << "\e[1;31mError: Invalid genre code or file error for ID: " << id << "\e0m" <<  endl;
         }

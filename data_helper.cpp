@@ -11,7 +11,9 @@
 #include "data_helper.hpp"
 
 // TODO: COMMENTSSSS
+// TODO: general unknown genres!!!!!!!!
 // TODO: keep hpp updated!!
+// TODO: generateBookID ID collision
 // general data entry output is: ID TITLE YEAR AUTHOR GENRE PUBLISHER
 // no title maps!!! it is in books.centralIndex
 
@@ -145,11 +147,14 @@ void printDataEntry(string id, string title, string author, int year, string pub
 void addBookEntry(BookBundle& books)
 {
     cout << "\tAdd a new Book" << endl;
-    string genre;
-    cout << "\tGenre: ";
-    getline(cin >> ws, genre);
+    string genre, id;
+    do 
+    {
+        cout << "\tGenre: ";
+        getline(cin >> ws, genre);
 
-    string id = generateBookID(genre, books);
+        id = generateBookID(genre, books);
+    } while (id.substr(0, 3) == "UNK");
     if (id == "") return;
 
     string title, author, publisher;
@@ -194,7 +199,7 @@ void searchBookByID(BookBundle& books)
         string id;
         cin >> id;
 
-        if (id.length() < 7)
+        if (id.length() < 7 || id.length() > 7)
         {
             cout << "\t\t\e[1;31mInvalid ID. Try again";
             for (int i = 0; i < 3; i++)
@@ -256,6 +261,7 @@ void searchBookByTitle(BookBundle& books)
     }
     else 
     {
+        cout << "\n\tFound \e[1;32m" << results << "\e[0m matching entry(ies)." << endl;
         pressAnyKey();
         cls();
     }
@@ -327,6 +333,7 @@ void searchBookByAuthor(BookBundle& books)
     }
     else 
     {
+        cout << "\n\tFound \e[1;32m" << results << "\e[0m matching entry(ies)." << endl;
         pressAnyKey();
         cls();
     }
@@ -474,7 +481,7 @@ void deleteBook(BookBundle& books, MemberBundle& members)
         string id;
         cin >> id;
 
-        if (id.length() < 7)
+        if (id.length() < 7 || id.length() > 7)
         {
             cout << "\t\t\e[1;31mInvalid ID. Try again";
             for (int i = 0; i < 3; i++)

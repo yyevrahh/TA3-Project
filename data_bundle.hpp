@@ -8,17 +8,18 @@ using namespace std;
 
 struct BookBundle
 {
-    unordered_map<string, string> centralIndex;
-    unordered_map<string, string> authors;
-    unordered_map<string, int> years;
-    unordered_map<string, string> publishers;
+    // book id: GEN0101
+    unordered_map<string, string> centralIndex; // id : title
+    unordered_map<string, string> authors;      // id : author
+    unordered_map<string, int> years;           // id : year
+    unordered_map<string, string> publishers;   // id : publisher
 };
 
 struct MemberBundle
 {
-    int nextId;
-    unordered_map<string, string> users; // id, name
-    unordered_map<string, string> borrows; // book id, mem id
+    int nextId;                          // to avoid member id collision
+    unordered_map<string, string> users; // member id : name
+    unordered_map<string, string> borrows; // book id : mem id
 };
 
 #endif

@@ -8,8 +8,10 @@
 
 using namespace std;
 
-void initAllData(BookBundle&, MemberBundle&);
-void updateGenresFile(BookBundle&);
+//TODO: refactor update.
+
+void initAllData(BookBundle&, MemberBundle&);   // for initializing all data into maps
+void updateGenresFile(BookBundle&);            
 void updateFileByDataMapStr(string, unordered_map<string, string>&);
 void updateFileByDataMapYears(string, const BookBundle&);
 int getNext(string);

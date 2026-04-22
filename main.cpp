@@ -19,9 +19,9 @@ int main()
     members.nextId = getNext("members.txt");
 
     cls();
-    cout << "\n\t\e[1;33m=====================================" << endl;
-    cout << "\t\e[1;32m      TUP LIBRARY SYSTEM v1.0" << endl;
-    cout << "\t\e[1;33m=====================================\e[0m" << endl;
+    cout << "\n\t\e[1;31m=====================================" << endl;
+    cout << "\t\e[1;37m      TUP LIBRARY SYSTEM v1.0" << endl;
+    cout << "\t\e[1;31m=====================================\e[0m" << endl;
     wait(2000);
 
     // manu nav operations
@@ -72,6 +72,5 @@ int main()
             wait(800);
         }
     }
-
     return 0;
 }
