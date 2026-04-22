@@ -5,25 +5,27 @@
 #include <unordered_map>
 #include <vector>
 #include "data_bundle.hpp"
+#include "file_helper.hpp"
 
 using namespace std;
-// run these functions for both initializing and exiting
+// run these functions for both initializing and exiting pls
 
-void initAllData(BookBundle& books) {
+void initAllData(BookBundle& books, MemberBundle& members) {
     vector<string> genres = {"fantasy", "mystery", "romance", "science_fiction", "thriller"};
-    
-    for (const string& genre : genres) {
-        ifstream file("book_genres/" + genre + ".txt");
-        string line;
 
-        while (getline(file, line)) {
+    for (const string& genre : genres)
+    {
+        ifstream file("book_genres/" + genre + ".txt");
+        if (!file.is_open()) continue;
+
+        string line;
+        while (getline(file, line))
+        {
             stringstream ss(line);
             string id, title, author, yearStr, publisher;
 
-            if (getline(ss, id, ',') &&
-                getline(ss, title, ',') &&
-                getline(ss, author, ',') &&
-                getline(ss, yearStr, ',') &&
+            if (getline(ss, id, ',') && getline(ss, title, ',') &&
+                getline(ss, author, ',') && getline(ss, yearStr, ',') &&
                 getline(ss, publisher)) 
             {
                 books.centralIndex[id] = title;
@@ -32,7 +34,29 @@ void initAllData(BookBundle& books) {
                 books.publishers[id] = publisher;
             }
         }
-        file.close();
+    }
+
+    ifstream memFile("members.txt");
+    string line;
+    while (getline(memFile, line))
+    {
+        stringstream ss(line);
+        string id, name;
+        if (getline(ss, id, ',') && getline(ss, name))
+        {
+            members.users[id] = name;
+        }
+    }
+
+    ifstream borrowsFile("borrowed_books.txt");
+    while (getline(borrowsFile, line))
+    {
+        stringstream ss(line);
+        string bookID, memID;
+        if (getline(ss, bookID, ',') && getline(ss, memID))
+        {
+            members.borrows[bookID] = memID; 
+        }
     }
 }
 
@@ -59,7 +83,7 @@ void updateGenresFile(BookBundle& books)
         // check if all exists and ready
         if (targetFile && *targetFile) 
         {
-            *targetFile << id << "," << title << "," << books.authors.at(id) << "," << books.years.at(id) << "," << books.publishers.at(id) << endl;
+            *targetFile << id << "," << title << "," << books.authors[id] << "," << books.years[id] << "," << books.publishers[id] << endl;
         }
         else 
         {
@@ -102,4 +126,43 @@ void updateFileByDataMapYears(string path, const BookBundle& books)
     }
 
     writeFile.close();
+}
+
+int getNext(string filename)
+{
+    ifstream file(filename);
+    if (!file.is_open()) return 0;
+
+    int maxID = 0;
+    string line;
+
+    while (getline(file, line))
+    {
+        if (line.empty()) continue;
+        try
+        {
+            size_t firstDelim = line.find(',');
+            string idPart = line.substr(0, firstDelim);
+            int currentID = stoi(idPart.substr(3));
+            if (currentID > maxID) maxID = currentID;
+        }
+        catch (...) { continue; }
+    }
+    return maxID;
+}
+
+bool saveAllData(BookBundle& books, MemberBundle& members)
+{
+    try
+    {
+        updateGenresFile(books);
+        updateFileByDataMapStr("members.txt", members.users);
+        updateFileByDataMapStr("borrowed_books.txt", members.borrows);
+
+        return true;
+    }
+    catch (...)
+    {
+        return false;
+    }
 }

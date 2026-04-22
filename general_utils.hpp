@@ -7,5 +7,7 @@ using namespace std;
 
 int getValidInt(const string&);
 void pressAnyKey();
+void cls();
+void wait(int);
 
 #endif

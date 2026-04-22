@@ -8,9 +8,11 @@
 
 using namespace std;
 
-void initAllData(BookBundle& books);
+void initAllData(BookBundle&, MemberBundle&);
 void updateGenresFile(BookBundle&);
 void updateFileByDataMapStr(string, unordered_map<string, string>&);
-void updateFileByDataMapInt(string, const BookBundle&);
+void updateFileByDataMapYears(string, const BookBundle&);
+int getNext(string);
+bool saveAllData(BookBundle&, MemberBundle&);
 
 #endif

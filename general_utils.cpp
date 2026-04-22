@@ -1,7 +1,20 @@
+#ifdef _WIN32
+    #include <conio.h>
+    #include <windows.h>
+#else
+    #include <termios.h>
+    #include <unistd.h>
+#endif
+
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <chrono>
+#include <thread>
 
-using namespace std;
+using namespace std; 
+
+#include "general_utils.hpp"
 
 int getValidInt(const string& prompt) {
     int value;
@@ -21,15 +34,10 @@ int getValidInt(const string& prompt) {
     }
 }
 
-#ifdef _WIN32
-    #include <conio.h>
-#else
-    #include <termios.h>
-    #include <unistd.h>
-#endif
-
 void pressAnyKey() 
 {
+    
+    cout << endl << endl;
     cout << "\nPress any key to continue..." << flush;
 
 #ifdef _WIN32
@@ -43,4 +51,14 @@ void pressAnyKey()
     getchar();
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 #endif
+}
+
+void cls()
+{
+    cout << "\033[2J\033[H" << flush;
+}
+
+void wait(int ms)
+{
+    this_thread::sleep_for(chrono::milliseconds(ms));
 }
