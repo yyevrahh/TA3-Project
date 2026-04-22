@@ -13,7 +13,7 @@
 // TODO: COMMENTSSSS
 // TODO: general unknown genres!!!!!!!!
 // TODO: keep hpp updated!!
-// TODO: generateBookID ID collision
+// FIXME: generateBookID ID collision
 // general data entry output is: ID TITLE YEAR AUTHOR GENRE PUBLISHER
 // no title maps!!! it is in books.centralIndex
 
