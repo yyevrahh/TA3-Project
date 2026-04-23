@@ -44,7 +44,7 @@ int getLastBookIndex(const string& code, const BookBundle& books)
 
 void getPlacement(int nextIndex, int& shelf, int& level)
 {
-    // If nextIndex is 31:
+    // If nextIndex is 31: 
     // shelf = (30 / 30) + 1 = 2
     // level = (30 % 30) + 1 = 1
     // Result: 0201
@@ -120,15 +120,15 @@ string center(string text, int width)
 
 void printBookHeader()
 {
-    // Fixed column widths to ensure vertical alignment across all rows
-    int wID = 12, wTitle = 35, wYear = 10, wAuthor = 25, wGenre = 20, wPub = 25;
+    // Fixed column widths
+    int wID = 14, wTitle = 37, wYear = 12, wAuthor = 27, wGenre = 22, wPub = 27;
 
-    cout << center("ID", wID)
-         << center("TITLE", wTitle)
-         << center("YEAR", wYear)
-         << center("AUTHOR", wAuthor)
-         << center("GENRE", wGenre)
-         << center("PUBLISHER", wPub) << endl;
+    cout << "\e[1;33m" << center("ID", wID) << "\e[0m"
+         << "\e[1;37m" << center("TITLE", wTitle) << "\e[0m"
+         << "\e[1;37m" << center("YEAR", wYear) << "\e[0m"
+         << "\e[1;35m" << center("AUTHOR", wAuthor) << "\e[0m"
+         << "\e[1;36m" << center("GENRE", wGenre) << "\e[0m"
+         << "\e[1;34m" << center("PUBLISHER", wPub) << "\e[0m" << endl;
 
     // Print a horizontal line spanning the total table width
     cout << string(wID + wTitle + wYear + wAuthor + wGenre + wPub, '-') << endl;
@@ -136,30 +136,27 @@ void printBookHeader()
 
 void printDataEntry(string id, string title, string author, int year, string publisher)
 {
-    int wID = 12, wTitle = 35, wYear = 10, wAuthor = 25, wGenre = 20;
+    int wID = 14, wTitle = 37, wYear = 12, wAuthor = 27, wGenre = 22;
     string genre = translateCodeToGenre(id);
 
-    // Truncation logic: Prevents long strings from breaking the table alignment
-    if (title.length() > 32)
-    {
-        title = title.substr(0, 29) + "...";
-    }
-    if (author.length() > 22)
-    {
-        author = author.substr(0, 19) + "...";
-    }
-    if (publisher.length() > 22)
-    {
-        publisher = publisher.substr(0,19) + "...";
-    }
-    // Render columns using left-justified formatting
+    if (title.length() > 32) title = title.substr(0, 29) + "...";
+    if (author.length() > 22) author = author.substr(0, 19) + "...";
+    if (publisher.length() > 22) publisher = publisher.substr(0, 19) + "...";
+
+    string colorID = "\e[3;1;33m" + id + "\e[0m";
+    string colorTitle = "\e[1;37m" + title + "\e[0m";
+    string colorYear = "\e[3;1;37m" + to_string(year) + "\e[0m";
+    string colorAuthor = "\e[1;35m" + author + "\e[0m";
+    string colorGenre = "\e[1;36m" + genre + "\e[0m";
+    string colorPub = "\e[1;34m" + publisher + "\e[0m";
+
     cout << left 
-         << "  " << setw(wID - 2)     << id 
-         << "  " << setw(wTitle - 2)  << title 
-         << "   " << setw(wYear - 2)   << year 
-         << "  " << setw(wAuthor - 2) << author 
-         << "  " << setw(wGenre - 2)  << genre 
-         << publisher << endl;
+         << "  " << setw(wID + 11)    << colorID 
+         << "  " << setw(wTitle + 9)  << colorTitle 
+         << "    " << setw(wYear + 11) << colorYear 
+         << "  " << setw(wAuthor + 9) << colorAuthor 
+         << "  " << setw(wGenre + 9)  << colorGenre 
+         << colorPub << endl;
 }
 
 void addBookEntry(BookBundle& books)
@@ -760,7 +757,7 @@ void borrowABook(MemberBundle& members, BookBundle& books)
         if (choice == 1)
         {
             members.borrows[bookID] = memID;
-            cout << memID << "\n\n\t\e[1;32msuccessfully borrowed \e[0m" << books.centralIndex[bookID] << endl;
+            cout << "\n\n\t\e[1;35m" << memID << " \e[1;32msuccessfully borrowed \e[0m" << books.centralIndex[bookID] << endl;
         }
     }
     pressAnyKey();
