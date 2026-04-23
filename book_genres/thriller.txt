@@ -1,0 +1,5 @@
+THR0101,The Silence of the Lambs,Thomas Harris,1988,St. Martin's Press
+THR0102,The Shining,Stephen King,1977,Doubleday
+THR0103,Jurassic Park,Michael Crichton,1990,Knopf
+THR0104,The Guest List,Lucy Foley,2020,William Morrow
+THR0105,Dark Matter,Blake Crouch,2016,Crown Publishing

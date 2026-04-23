@@ -1,1 +1,6 @@
-SCI0101,Dune,Frank Herbert,1963,Chilton Books
+SCI0101,Dune,Frank Herbert,1965,Chilton Books
+SCI0102,Foundation,Isaac Asimov,1951,Gnome Press
+SCI0103,Neuromancer,William Gibson,1984,Ace Books
+...skip for demo
+SCI0129,The Left Hand of Darkness,Ursula K. Le Guin,1969,Ace Books
+SCI0130,Project Hail Mary,Andy Weir,2021,Ballantine Books

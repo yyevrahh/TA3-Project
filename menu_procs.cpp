@@ -1,3 +1,8 @@
+/**
+ * @file enu_procs.cpp
+ * @brief Menu processes handler and dispatcher
+ * Includes functions for navigating through operations/methods from @file data_helper.cpp
+ */
 #include <iostream>
 #include "menu_procs.hpp"
 #include "data_bundle.hpp"
@@ -19,8 +24,10 @@ void bookMenu(BookBundle& books, MemberBundle& members)
              << "\t[5] Show all Books\n"
              << "\t[0] Back to Main Menu\n";
         int choice = getValidInt("\tChoice: ");
+        // user to move back up the menu hierarchy
         if (choice == 0) break;
         cls();
+        // selection to the appropriate data_helper function
         if (choice == 1) addBookEntry(books);
         else if (choice == 2) bookSearchMenu(books);
         else if (choice == 3) updateBook(books);

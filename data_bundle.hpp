@@ -6,15 +6,21 @@
 
 using namespace std;
 
+/**
+ * @brief Data bundle for books consists of  maps for book attributes (much efficient and workable for this project)
+ */
 struct BookBundle
 {
-    // book id: GEN0101
+    // book id: GEN0101 (sample)
     unordered_map<string, string> centralIndex; // id : title
     unordered_map<string, string> authors;      // id : author
     unordered_map<string, int> years;           // id : year
     unordered_map<string, string> publishers;   // id : publisher
 };
 
+/*
+ * @brief consists of  maps for member attributes
+ */
 struct MemberBundle
 {
     int nextId;                          // to avoid member id collision

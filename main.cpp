@@ -10,7 +10,7 @@ using namespace std;
 
 int main() 
 {
-    // Init data bundles
+    // Init data bundles from files data
     BookBundle books;
     MemberBundle members;
     initAllData(books, members); 
@@ -20,7 +20,7 @@ int main()
 
     cls();
     cout << "\n\t\e[1;31m=====================================" << endl;
-    cout << "\t\e[1;37m      TUP LIBRARY SYSTEM v1.0" << endl;
+    cout << "\t\e[1;37m       TUP LIBRARY SYSTEM v1.0" << endl;
     cout << "\t\e[1;31m=====================================\e[0m" << endl;
     wait(2000);
 
@@ -43,7 +43,7 @@ int main()
             cls();
             cout << "\t\e[1;33mSecuring data...\e[0m" << endl;
             
-            // data permanence upon proper exit
+            // @important data permanence upon proper exit (only)
             if (saveAllData(books, members))
             {
                 cout << "\t\e[1;32mDatabase saved successfully.\e[0m" << endl;

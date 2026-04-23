@@ -1,3 +1,9 @@
+/**
+ * @file file_helper.cpp
+ * @brief Logic for data initialization and transfer to data bundles
+ * Includes functions for updating the files for data permanence
+ * @important only updates when properly terminated
+ */
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -8,13 +14,15 @@
 #include "file_helper.hpp"
 
 using namespace std;
-// run these functions for both initializing and exiting pls
+// @important run these functions for both initializing and exiting pls
 
 void initAllData(BookBundle& books, MemberBundle& members) {
+    // the list of the genres to be loaded into maps
     vector<string> genres = {"fantasy", "mystery", "romance", "science_fiction", "thriller"};
 
     for (const string& genre : genres)
     {
+        // open file read for each genre
         ifstream file("book_genres/" + genre + ".txt");
         if (!file.is_open()) continue;
 
@@ -24,10 +32,12 @@ void initAllData(BookBundle& books, MemberBundle& members) {
             stringstream ss(line);
             string id, title, author, yearStr, publisher;
 
+            // check if all exists
             if (getline(ss, id, ',') && getline(ss, title, ',') &&
                 getline(ss, author, ',') && getline(ss, yearStr, ',') &&
                 getline(ss, publisher)) 
             {
+                // write into maps
                 books.centralIndex[id] = title;
                 books.authors[id] = author;
                 books.years[id] = stoi(yearStr);
@@ -36,6 +46,7 @@ void initAllData(BookBundle& books, MemberBundle& members) {
         }
     }
 
+    // initializer for member maps:
     ifstream memFile("members.txt");
     string line;
     while (getline(memFile, line))
@@ -103,26 +114,10 @@ void updateFileByDataMapStr(string path, unordered_map<string, string>& dataMap)
 {
     ofstream writeFile(path);
     string id, content;
-
+    // simple value comma value write into file
     for (auto const& [id, content] : dataMap)
     {
         writeFile << id << "," << content << endl;
-    }
-
-    writeFile.close();
-}
-
-// use to update key:value data from <string, int> maps = years
-void updateFileByDataMapYears(string path, const BookBundle& books)
-{
-    ofstream writeFile(path);
-
-    string id;
-    int year;
-
-    for (auto const& [id, year] : books.years)
-    {
-        writeFile << id << "," << year << endl;
     }
 
     writeFile.close();
@@ -141,10 +136,12 @@ int getNext(string filename)
         if (line.empty()) continue;
         try
         {
-            size_t firstDelim = line.find(',');
-            string idPart = line.substr(0, firstDelim);
-            int currentID = stoi(idPart.substr(3));
-            if (currentID > maxID) maxID = currentID;
+           if (line.length() >= 7)
+           {
+                string idPart = line.substr(0, 7);
+                int currentID = stoi(idPart.substr(3));
+                if (currentID > maxID) maxID = currentID;
+            }
         }
         catch (...) { continue; }
     }
