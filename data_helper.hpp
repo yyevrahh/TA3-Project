@@ -23,7 +23,6 @@ int getLastBookIndex(const string&, const BookBundle&);
  * @param shelf address to the modifiable shelf value
  * @param level address to the modifiable level value
  */
-
 void getPlacement(int, int&, int&);
 
 /**

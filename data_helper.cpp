@@ -371,7 +371,7 @@ void searchBookByPublisher(BookBundle& books)
 {
     cls();
     cout << "\tSearch for Book(s)" << endl;
-    cout << "\tAuthor: ";
+    cout << "\tPublisher: ";
     string publisherInput;
     getline(cin >> ws, publisherInput);
 
